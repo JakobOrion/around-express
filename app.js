@@ -1,17 +1,20 @@
 const express = require('express');
 
-const { PORT = 3000 } = process.env;
-const cardsRoute = require('./routes/cards');
-const userRoute = require('./routes/users');
-
 const app = express();
+const userRouter = require('./routes/users');
+const cardsRouter = require('./routes/cards');
 
-app.listen(PORT);
+const { PORT = 3000 } = process.env;
 
-app.use('/cards', cardsRoute);
-app.use('/users', userRoute);
+app.use('/users', userRouter);
+app.use('/cards', cardsRouter);
 
 app.use((req, res, next) => {
   res.status(404).send({ message: 'Requested resource not found' });
   next();
+});
+
+app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
+  console.log(`Server listening on Port ${PORT}`);
 });

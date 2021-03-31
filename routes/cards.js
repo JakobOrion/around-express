@@ -1,8 +1,8 @@
-const router = require('express').Router();
-const cards = require('../data/cards.json');
+const express = require('express');
 
-router.get('/', (req, res) => {
-  res.send(cards);
-});
+const router = express.Router();
+const { getCards } = require('../controllers/cards');
+
+router.get('/', getCards);
 
 module.exports = router;
