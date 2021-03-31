@@ -1,7 +1,10 @@
+const path = require('path');
 const readFile = require('../utils/readFile');
 
+const cardsPath = path.join(__dirname, '..', 'data', 'cards.json');
+
 const getCards = (req, res) => {
-  readFile('./data/cards.json')
+  readFile(cardsPath)
     .then((cards) => {
       res.status(200).send(cards);
     })
