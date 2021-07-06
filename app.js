@@ -15,6 +15,7 @@ const cardsRouter = require('./routes/cards');
 
 const { PORT = 3000 } = process.env;
 
+app.use(express.json());
 app.use('/users', userRouter);
 app.use('/cards', cardsRouter);
 
