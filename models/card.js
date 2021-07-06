@@ -11,6 +11,11 @@ const cardSchema = new mongoose.Schema({
   // link to the card picture
   link: {
     type: String,
+    validate: {
+      validator(v) {
+        return /(https?:\/\/)(www\.)?\S+/ig.test(v);
+      },
+    },
     required: true,
   },
   // link to the card author's model
