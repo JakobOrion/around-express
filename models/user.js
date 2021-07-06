@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { linkRegex } = require('../utils/utils');
 
 const userSchema = new mongoose.Schema({
   // username
@@ -20,7 +21,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator(v) {
-        return /(https?:\/\/)(www\.)?\S+/ig.test(v);
+        return linkRegex.test(v);
       },
     },
     required: true,
