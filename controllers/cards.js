@@ -1,11 +1,6 @@
-const path = require('path');
-const readFile = require('../utils/readFile');
 const Card = require('../models/card');
 
-const cardsPath = path.join(__dirname, '..', 'data', 'cards.json');
-
 const getCards = (req, res) => {
-  readFile(cardsPath);
   Card.find({})
     .then((cards) => {
       res.status(200).send({ data: cards });
@@ -17,8 +12,9 @@ const getCards = (req, res) => {
 
 const createCard = (req, res) => {
   const { name, link } = req.body;
+  console.log(req.user._id);
 
-  Card.create({ name, link })
+  Card.create({ name, link, owner: req.user._id })
     .then((card) => res.send({ data: card }))
     .catch(() => {
       res.status(500).send({ message: 'Requested resource not found' });

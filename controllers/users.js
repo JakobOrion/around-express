@@ -1,11 +1,6 @@
-const path = require('path');
-const readFile = require('../utils/readFile');
 const User = require('../models/user');
 
-const usersPath = path.join(__dirname, '..', 'data', 'users.json');
-
 const getUsers = (req, res) => {
-  readFile(usersPath);
   User.find({})
     .then((users) => {
       res.status(200).send({ data: users });

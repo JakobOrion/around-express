@@ -20,6 +20,9 @@ app.use('/users', userRouter);
 app.use('/cards', cardsRouter);
 
 app.use((req, res, next) => {
+  req.user = {
+    _id: '60e49e510aa3fff07be4fd23',
+  };
   res.status(404).send({ message: 'Requested resource not found' });
   next();
 });
