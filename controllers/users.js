@@ -1,12 +1,14 @@
 const User = require('../models/user');
+const { checkErrors } = require('../utils/utils');
 
 const getUsers = (req, res) => {
   User.find({})
+    .orFail(new Error('Not Found'))
     .then((users) => {
       res.status(200).send({ data: users });
     })
-    .catch(() => {
-      res.status(500).send({ message: 'Requested resource not found' });
+    .catch((err) => {
+      checkErrors({ res, err });
     });
 };
 
@@ -16,8 +18,8 @@ const getUserId = (req, res) => {
       const userData = data.find((user) => user._id === req.params.id);
       return (userData ? res.status(200).send(userData) : res.status(404).send({ message: 'User ID not found' }));
     })
-    .catch(() => {
-      res.status(500).send({ message: 'Requested resource not found' });
+    .catch((err) => {
+      checkErrors({ res, err });
     });
 };
 
