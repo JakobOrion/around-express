@@ -33,4 +33,34 @@ const createUser = (req, res) => {
     });
 };
 
-module.exports = { getUsers, getUserId, createUser };
+const updateProfile = (req, res) => {
+  const { name, about } = req.body;
+  const { _id } = req.user;
+
+  User.findByIdAndUpdate(_id, { name, about })
+    .orFail(new Error('Not Found'))
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      checkErrors({ res, err });
+    });
+};
+
+const updateAvatar = (req, res) => {
+  const { avatar } = req.body;
+  const { _id } = req.user;
+
+  User.findByIdAndUpdate(_id, { avatar })
+    .orFail(new Error('Not Found'))
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      checkErrors({ res, err });
+    });
+};
+
+module.exports = {
+  getUsers, getUserId, createUser, updateProfile, updateAvatar,
+};
