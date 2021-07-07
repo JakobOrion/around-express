@@ -6,7 +6,7 @@ const checkErrors = ({ res, err }) => {
   } else if (err.name === ('CastError' || 'ValidationError')) {
     res.status(400).send({ message: 'Data is invalid' });
   } else {
-    res.status(500).send({ message: 'Server error' });
+    res.status(500).send({ message: err.message });
   }
 };
 
