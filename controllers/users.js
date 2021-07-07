@@ -14,9 +14,9 @@ const getUsers = (req, res) => {
 
 const getUserId = (req, res) => {
   User.findById(req.params.id)
-    .then((data) => {
-      const userData = data.find((user) => user._id === req.params.id);
-      return (userData ? res.status(200).send(userData) : res.status(404).send({ message: 'User ID not found' }));
+    .orFail(new Error('Not Found'))
+    .then((user) => {
+      res.status(200).send({ data: user });
     })
     .catch((err) => {
       checkErrors({ res, err });
