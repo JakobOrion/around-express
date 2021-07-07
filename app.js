@@ -3,6 +3,13 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+app.use((req, res, next) => {
+  req.user = {
+    _id: '60e49e510aa3fff07be4fd23',
+  };
+  next();
+});
+
 mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -18,14 +25,6 @@ const { PORT = 3000 } = process.env;
 app.use(express.json());
 app.use('/users', userRouter);
 app.use('/cards', cardsRouter);
-
-app.use((req, res, next) => {
-  req.user = {
-    _id: '60e49e510aa3fff07be4fd23',
-  };
-  res.status(404).send({ message: 'Requested resource not found' });
-  next();
-});
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console

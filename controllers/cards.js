@@ -15,8 +15,10 @@ const getCards = (req, res) => {
 const createCard = (req, res) => {
   const { name, link } = req.body;
 
-  Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.send({ data: card }))
+  return Card.create({ name, link, owner: req.user._id })
+    .then((card) => {
+      res.status(200).send({ data: card });
+    })
     .catch((err) => {
       checkErrors({ res, err });
     });
