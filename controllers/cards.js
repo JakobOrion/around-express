@@ -31,4 +31,32 @@ const deleteCard = (req, res) => {
     });
 };
 
-module.exports = { getCards, createCard, deleteCard };
+const likeCard = (req, res) => {
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $addToSet: { likes: req.user._id } },
+    { new: true },
+  )
+    .orFail(new Error('Not Found'))
+    .then((card) => res.status(200).send({ data: card }))
+    .catch((err) => {
+      checkErrors({ res, err });
+    });
+};
+
+const unlikeCard = (req, res) => {
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $pull: { likes: req.user._id } },
+    { new: true },
+  )
+    .orFail(new Error('Not Found'))
+    .then((card) => res.status(200).send({ data: card }))
+    .catch((err) => {
+      checkErrors({ res, err });
+    });
+};
+
+module.exports = {
+  getCards, createCard, deleteCard, likeCard, unlikeCard,
+};
