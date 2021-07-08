@@ -37,7 +37,7 @@ const likeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
-    { new: true },
+    { new: true, runValidators: true },
   )
     .orFail(new Error('Not Found'))
     .then((card) => res.status(200).send({ data: card }))
@@ -50,7 +50,7 @@ const unlikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
-    { new: true },
+    { new: true, runValidators: true },
   )
     .orFail(new Error('Not Found'))
     .then((card) => res.status(200).send({ data: card }))
