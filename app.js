@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 
 const app = express();
 
@@ -23,6 +24,7 @@ const cardsRouter = require('./routes/cards');
 const { PORT = 3000 } = process.env;
 
 app.use(express.json());
+app.use(helmet());
 app.use('/users', userRouter);
 app.use('/cards', cardsRouter);
 
